@@ -287,7 +287,7 @@
         }
 
         function addNote(categoryIndex) {
-            categories[categoryIndex].notes.push({content: "", title: `Note `, isCollapsed: false});
+            categories[categoryIndex].notes.push({content: "", title: `Note ${categories[categoryIndex].notes.length + 1}`, isCollapsed: false});
             saveData();
             renderCategories();
         }
@@ -355,11 +355,11 @@
                 categoryHeader.className = "category-header";
                 categoryHeader.style.backgroundColor = category.color;
                 categoryHeader.innerHTML = `
-                    <h2></h2>
+                    <h2>${category.name}</h2>
                     <div class="category-buttons">
-                        <button onclick="addNote()">+</button>
-                        <button onclick="toggleColorPicker()">Color</button>
-                        <button onclick="deleteCategory()" style="background-color: #ff6b6b;">Delete</button>
+                        <button onclick="addNote(${categoryIndex})">+</button>
+                        <button onclick="toggleColorPicker(${categoryIndex})">Color</button>
+                        <button onclick="deleteCategory(${categoryIndex})" style="background-color: #ff6b6b;">Delete</button>
                     </div>
                 `;
                 categoryHeader.onclick = (e) => {
@@ -392,8 +392,8 @@
                     const noteHeader = document.createElement("div");
                     noteHeader.className = "note-header";
                     noteHeader.innerHTML = `
-                        <input type="text" value="" onchange="updateNoteTitle(, , this.value)">
-                        <button class="delete-note" onclick="deleteNote(, )">X</button>
+                        <input type="text" value="${note.title}" onchange="updateNoteTitle(${categoryIndex}, ${noteIndex}, this.value)">
+                        <button class="delete-note" onclick="deleteNote(${categoryIndex}, ${noteIndex})">X</button>
                     `;
                     noteHeader.onclick = () => toggleNoteCollapse(categoryIndex, noteIndex);
 
